@@ -1,1 +1,1 @@
-# eli-xciv.github.io
+# Ghost Static Blog
