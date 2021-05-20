@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Archinstall Issue</title>
+	<title>From Ghost to Static Site</title>
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="post-template tag-tech tag-arch">
+<body class="post-template">
 
 	<div class="nav-header">
 		<nav class="nav-wrapper" aria-label="Main">
@@ -69,71 +69,58 @@
 	<span class="progress-bar"></span>
 </div>
 
-<header class="post-header  has-cover ">
+<header class="post-header ">
 	<div class="inner">
 		<span class="post-info">
 			<span class="post-type">Article</span>
-			<span class="post-count">tech</span>
 		</span>
-		<h1 class="post-title">Archinstall Issue</h1>
+		<h1 class="post-title">From Ghost to Static Site</h1>
 		<div class="post-meta">
 			<div class="post-meta-avatars">
 					<figure class="post-meta-avatar avatar">
 					</figure>
 			</div>
-			<h4 class="post-meta-author"><a href="/author/eli-2/">Eli</a></h4>
-			<time datetime="19-05-2021">19 May 2021</time> &bull; 2 min read
-		</div>
-		<div class="post-cover cover">
-			<img
-			srcset="/content/images/size/w320/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 320w,
-              /content/images/size/w640/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 640w,
-              /content/images/size/w960/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 960w,
-              /content/images/size/w1920/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 1920w"
-      src="/content/images/size/w1920/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png"
-			alt="Archinstall Issue" />
+			<h4 class="post-meta-author"><a href="/author/eli/">Eli</a></h4>
+			<time datetime="20-05-2021">20 May 2021</time> &bull; 2 min read
 		</div>
 	</div>
 </header>
 
 <main class="content" role="main">
-	<article class="post tag-tech tag-arch">
+	<article class="post no-image">
 		<div class="inner">
 
 			<section class="post-content">
-				<p>I had an older laptop that I've been neglecting to reinstall Arch Linux on, and I came across the new Arch Installer (<a href="https://github.com/archlinux/archinstall">archinstall</a>). So I decided to try it out. </p><p>I used the ArchLinux liveCD (About 2-3 months old) and booted it up. Since my LiveCD was not a newer one, <code>archinstall</code> was not available at default. So I updated the repo's with <code>pacman -Sy</code> and lo-and-behold I could install it with <code>pacamn -S archinstall</code>. </p><p>I ran <code>archinstall guided</code> to get a feel for it and I made it to the partitioning scheme. At which point, <code>archinstall</code> quit stating...</p><p>"ArchInstall currently only supports machines booted with UEFI. MBR &amp; GRUB support is coming in version 2.2.0!" </p><p>Great....</p><p>So I decided to checkout their Github project to see where they're at and I found</p><figure class="kg-card kg-image-card"><img src="https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png" class="kg-image" alt loading="lazy" width="1543" height="359" srcset="https://eli-xciv.github.io/content/images/size/w600/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 600w, https://eli-xciv.github.io/content/images/size/w1000/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 1000w, https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 1543w" sizes="(min-width: 720px) 720px"></figure><p>Legacy Support was closed! Okay, wait. Lets go look at it....</p><figure class="kg-card kg-image-card"><img src="https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png" class="kg-image" alt loading="lazy" width="1140" height="329" srcset="https://eli-xciv.github.io/content/images/size/w600/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 600w, https://eli-xciv.github.io/content/images/size/w1000/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 1000w, https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 1140w" sizes="(min-width: 720px) 720px"></figure><p>Whoooooo, it's in master and should be completed. Lets check it out (literally w/ git).</p><pre><code class="language-bash">git clone https://github.com/archlinux/archinstall
-cd archlinux</code></pre><p>cool we got <code>master</code>, now lets install the requirements..... <code>python install</code></p><p>Now we can run this with python. <code>python -m archinstall guided</code></p><p>I followed the prompt and this time it didn't complain about <code>MBR</code>. So cool lets select the default partitioning scheme.</p><p>... </p><p>Great, all config items are set, now let it rip,</p><p>Error: <code>New partition never showed up after adding new partition on /dev/sda (timeout 10 seconds).</code></p><p>What!? - Okay maybe it's a fluke, lets run it again.</p><p>Same error....</p><p>Okay.... well lets look at <code>/dev/sda</code>. There's a partition there but that's from the OS I'm trying to write over.... well lets remove it since it'll be overwritten anyway.. and verify it's removed</p><pre><code class="language-bash">lsblk
-#/dev/sda
-#|-&gt; /dev/sda1
+				<p>This is the story of creating this site...</p><p>I've always liked the Ghost Blogging platform since it was released years ago. I like it's editor, CMS, among other things. However, I don't like that I can't host it as a static site (SS). I want to be able to use the like of Netlify, Github/Gitlab pages or any other static hosting provider. I started googling and found Ned's <a href="https://www.nedmcclain.com/static-ghost-site/">blog post</a>. He explained his requirements which was exactly what I was looking for. He didn't explain everything, but did a good job at the overview, and so I did some of my own edits. </p><p>Note: SS version of ghost does remove some features, so check Ned's list to make sure you don't need them. I didn't because I was going for simple, and I mean really simple.</p><p>Basically the pipeline for doing a Static Site from Ghost is as follows</p><ol><li>Setup a local instance of Ghost (I'm using a container w/ podman</li><li>Create the site per your wants</li><li>Create a Static Site from the local ghost installation</li><li>Host the static site (We'll go over using Github pages, but you could use anything else)</li></ol><p><strong>Setting up local Ghost installation</strong></p><p>I'm using podman so.... I can get up and running with one command....</p><pre><code>podman run -d --name ghost -e url=https://eli-xciv.github.io -p 8080:2368 ghost</code></pre><p>Now I can point my browser to <code>https://eli-xciv.github.io/ghost</code></p><p><strong>Creating your site</strong></p><p>Checkout the Ghost docs to set up your site. I'm doing a simple blog using the Attila Theme, modified of course.</p><p><strong>Creating the static site</strong></p><p>Now this is the bread and butter. There's a nifty npm package called <code>ghost-static-site-generator</code>.</p><pre><code class="language-bash">(sudo) npm install -g ghost-static-site-generator</code></pre><p>That command will install a utility called <code>gssg</code>.</p><p>Now <code>gssg</code> will basically go to our local ghost installation and pull down a static version of the site.</p><p><strong>Hosting + Git</strong></p><p>I'm using github, follow <a href="https://pages.github.com/">their guide</a> to create a Github pages repo.</p><pre><code class="language-bash">git clone &lt;your_pages_repo&gt;</code></pre><p>** Edit the Settings for your repo to deploy the <code>/docs</code> folder from your repo</p><figure class="kg-card kg-image-card"><img src="https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-Build-software-better--together.png" class="kg-image" alt loading="lazy" width="705" height="164" srcset="https://eli-xciv.github.io/content/images/size/w600/2021/05/Screenshot_2021-05-20-Build-software-better--together.png 600w, https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-Build-software-better--together.png 705w"></figure><p>Now we're going to get a static site into <code>/docs</code></p><pre><code>gssg ---domain "https://eli-xciv.github.io" --url "https://eli-xciv.github.io" --dest docs</code></pre><p>Now all you need to do is to commit and push the repo to Github and it will publish your static site.</p><p><code>git add . ; git commit -m "First commit of Ghost Static Site"; git push -u origin master</code></p><p>Voila! in a second or so, your static site is hosted on github.io!</p><hr><p><strong>Extras</strong></p><p>In my repo I've created a script under <code>bin/migrate.sh</code> that will run the migration, and commit it to github. </p><pre><code class="language-bash">#!/bin/bash
+printf -v date '%(%Y-%m-%d %H:%M:%S)T\n' -1
 
-parted /dev/sda rm 1
+gssg ---domain "https://eli-xciv.github.io" --url "https://eli-xciv.github.io" --dest docs
 
-lsblk
-#/dev/sda</code></pre><p>Now lets run <code>python -m archinstall guided</code> again...</p><p>Everything completes. Yay! Time to go report this to the <code>archinstall</code> folks.</p><p>And I did. <a href="https://github.com/archlinux/archinstall/issues/478">Here</a></p><p></p><p>So, if there is a will, there's a way! <br>Thanks for reading!</p>
+git add .
+
+git commit -m "Blog Update: $date"
+
+git push</code></pre>
 			</section>
 
 			<section class="post-footer">
 
 				<div class="post-share">
 					<span class="post-info-label">Share</span>
-					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=Archinstall Issue&url=https://eli-xciv.github.io/archinstall-issue/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=From Ghost to Static Site&url=https://eli-xciv.github.io/from-ghost-to-static-site/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
 						<i class="icon icon-twitter" aria-hidden="true"></i>
 					</a>
-					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://eli-xciv.github.io/archinstall-issue/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://eli-xciv.github.io/from-ghost-to-static-site/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
 						<i class="icon icon-facebook" aria-hidden="true"></i>
 					</a>
-					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://eli-xciv.github.io/archinstall-issue//&amp;title=Archinstall Issue" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://eli-xciv.github.io/from-ghost-to-static-site//&amp;title=From Ghost to Static Site" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
 						<i class="icon icon-linkedin" aria-hidden="true"></i>
 					</a>
-					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=Archinstall Issue&amp;body=https://eli-xciv.github.io/archinstall-issue/">
+					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=From Ghost to Static Site&amp;body=https://eli-xciv.github.io/from-ghost-to-static-site/">
 						<i class="icon icon-mail" aria-hidden="true"></i>
 					</a>
 				</div>
 
-				<aside class="post-tags">
-					<span class="post-info-label">Topic</span>
-					<a href="/tag/tech/">tech</a> <a href="/tag/arch/">arch</a>
-				</aside>
 
 			</section>
 
@@ -146,15 +133,15 @@ lsblk
 
 			<aside class="post-nav">
 
-					<a class="post-nav-next" href="/from-ghost-to-static-site/">
+
+					<a class="post-nav-prev" href="/archinstall-issue/">
 						<section class="post-nav-teaser">
-							<i class="icon icon-arrow-left" aria-label="Next post"></i>
-							<h2 class="post-nav-title">From Ghost to Static Site</h2>
-							<p class="post-nav-excerpt">This is the story of creating this site... I've always liked the&hellip;</p>
-							<p class="post-nav-meta"><time datetime="20-05-2021">20 May 2021</time></p>
+							<i class="icon icon-arrow-right" aria-label="Previous post"></i>
+							<h2 class="post-nav-title">Archinstall Issue</h2>
+							<p class="post-nav-excerpt">Where I find a bug in the new `ArchInstall` utility&hellip;</p>
+							<p class="post-nav-meta"><time datetime="19-05-2021">19 May 2021</time></p>
 						</section>
 					</a>
-
 				<div class="clear"></div>
 			</aside>
 
