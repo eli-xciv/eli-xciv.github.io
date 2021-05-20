@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>tech - Eli</title>
+	<title>Contact</title>
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -31,7 +31,7 @@
 
 </head>
 
-<body class="tag-template tag-tech">
+<body class="page-template page-contact-2">
 
 	<div class="nav-header">
 		<nav class="nav-wrapper" aria-label="Main">
@@ -65,64 +65,25 @@
 
 		
 
-<header class="blog-header">
+<header class="post-header ">
 	<div class="inner">
-		<div class="archive archive-tag box archive-box">
-			<span class="archive-info">
-				<span class="archive-type">Topic</span>
-				<span class="archive-count">1 Post</span>
-			</span>
-			<h2 class="archive-title">tech</h2>
-		</div>
-
+		<h1 class="post-title">Contact</h1>
 	</div>
 </header>
 
-<div id="index" class="container">
+<main class="content" role="main">
+	<article class="post no-image page">
+		<div class="inner">
 
-	<main class="content" role="main">
+			<section class="post-content">
+				<p>If you want to set up a contact page for people to be able to reach out to you, the simplest way is to set up a simple page like this and list the different ways people can reach out to you.</p><h3 id="for-example-heres-how-to-reach-us">For example, here's how to reach us!</h3><ul><li><a href="https://twitter.com/ghost">@Ghost</a> on Twitter</li><li><a href="https://www.facebook.com/ghost">@Ghost</a> on Facebook</li><li><a href="https://instagram.com/ghost">@Ghost</a> on Instagram</li></ul><p>If you prefer to use a contact form, almost all of the great embedded form services work great with Ghost and are easy to set up:</p><figure class="kg-card kg-image-card"><a href="https://ghost.org/integrations/?tag=forms"><img src="https://static.ghost.org/v4.0.0/images/integrations.png" class="kg-image" alt loading="lazy" width="2944" height="1716"></a></figure>
+			</section>
 
-		<div class="extra-pagination">
-	<nav class="pagination" aria-label="Pagination">
-	<div class="inner">
-		<div class="box pagination-box">
-			<span class="pagination-info">Page 1 of 1</span>
 		</div>
-	</div>
-</nav>
-
-</div>
+	</article>
+</main>
 
 
-<article class="post tag-tech tag-arch">
-	<div class="inner">
-		<div class="box post-box">
-			<h2 class="post-title"><a href="/welcome-2/">Archinstall Issue</a></h2>
-			<span class="post-meta">
-				By
-				<a href="/author/eli-2/">Eli</a>
-				in <a class="post-meta-tag" href="/tag/tech/">tech</a>
-				on
-				<time datetime="19-05-2021">19 May 2021</time>
-			</span>
-			<p class="post-excerpt">Where I find a bug in the new `ArchInstall` utility&hellip;</p>
-		</div>
-	</div>
-</article>
-
-
-<nav class="pagination" aria-label="Pagination">
-	<div class="inner">
-		<div class="box pagination-box">
-			<span class="pagination-info">Page 1 of 1</span>
-		</div>
-	</div>
-</nav>
-
-
-	</main>
-
-</div>
 
 
 
@@ -157,7 +118,36 @@
 
 	<script type="text/javascript" src="/assets/js/script.js?v=1604804806"></script>
 
-	
+	<script>
+  $(document).ready(function () {
+		var post = $('.post-content');
+		// Responsive videos with fitVids
+    post.fitVids();
+		// Format code blocks and add line numbers
+		function codestyling() {
+	    $('pre code').each(function(i, e) {
+				// Code highlight
+	      hljs.highlightBlock(e);
+	      // No lines for plain text blocks
+	      if (!$(this).hasClass('language-text')) {
+	        var code = $(this);
+					// Calculate amount of lines
+	        var lines = code.html().split(/\n(?!$)/g).length;
+	        var numbers = [];
+	        if (lines > 1) {
+	          lines++;
+	        }
+	        for (i = 1; i < lines; i++) {
+	          numbers += '<span class="line" aria-hidden="true">' + i + '</span>';
+	        }
+	        code.parent().append('<div class="lines">' + numbers + '</div>');
+	      }
+	    });
+	  }
+	  codestyling();
+  });
+</script>
+
 
 
 </body>
