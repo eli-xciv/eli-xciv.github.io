@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-	<title>Archinstall Issue</title>
+	<title>Supporting Apple Devices on the Web...</title>
 	<meta name="HandheldFriendly" content="True" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -40,7 +40,7 @@
 
 </head>
 
-<body class="post-template tag-tech tag-arch">
+<body class="post-template">
 
 	<div class="nav-header">
 		<nav class="nav-wrapper" aria-label="Main">
@@ -78,71 +78,49 @@
 	<span class="progress-bar"></span>
 </div>
 
-<header class="post-header  has-cover ">
+<header class="post-header ">
 	<div class="inner">
 		<span class="post-info">
 			<span class="post-type">Article</span>
-			<span class="post-count">tech</span>
 		</span>
-		<h1 class="post-title">Archinstall Issue</h1>
+		<h1 class="post-title">Supporting Apple Devices on the Web...</h1>
 		<div class="post-meta">
 			<div class="post-meta-avatars">
 					<figure class="post-meta-avatar avatar">
 					</figure>
 			</div>
-			<h4 class="post-meta-author"><a href="/author/eli-2/">Eli</a></h4>
-			<time datetime="19-05-2021">19 May 2021</time> &bull; 2 min read
-		</div>
-		<div class="post-cover cover">
-			<img
-			srcset="/content/images/size/w320/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 320w,
-              /content/images/size/w640/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 640w,
-              /content/images/size/w960/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 960w,
-              /content/images/size/w1920/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png 1920w"
-      src="/content/images/size/w1920/2021/05/archlinux-logo-dark-90dpi.ebdee92a15b3.png"
-			alt="Archinstall Issue" />
+			<h4 class="post-meta-author"><a href="/author/eli/">Eli</a></h4>
+			<time datetime="10-06-2021">10 Jun 2021</time> &bull; 3 min read
 		</div>
 	</div>
 </header>
 
 <main class="content" role="main">
-	<article class="post tag-tech tag-arch">
+	<article class="post no-image">
 		<div class="inner">
 
 			<section class="post-content">
-				<p>I had an older laptop that I've been neglecting to reinstall Arch Linux on, and I came across the new Arch Installer (<a href="https://github.com/archlinux/archinstall">archinstall</a>). So I decided to try it out. </p><p>I used the ArchLinux liveCD (About 2-3 months old) and booted it up. Since my LiveCD was not a newer one, <code>archinstall</code> was not available at default. So I updated the repo's with <code>pacman -Sy</code> and lo-and-behold I could install it with <code>pacamn -S archinstall</code>. </p><p>I ran <code>archinstall guided</code> to get a feel for it and I made it to the partitioning scheme. At which point, <code>archinstall</code> quit stating...</p><p>"ArchInstall currently only supports machines booted with UEFI. MBR &amp; GRUB support is coming in version 2.2.0!" </p><p>Great....</p><p>So I decided to checkout their Github project to see where they're at and I found</p><figure class="kg-card kg-image-card"><img src="https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png" class="kg-image" alt loading="lazy" width="1543" height="359" srcset="https://eli-xciv.github.io/content/images/size/w600/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 600w, https://eli-xciv.github.io/content/images/size/w1000/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 1000w, https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall.png 1543w" sizes="(min-width: 720px) 720px"></figure><p>Legacy Support was closed! Okay, wait. Lets go look at it....</p><figure class="kg-card kg-image-card"><img src="https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png" class="kg-image" alt loading="lazy" width="1140" height="329" srcset="https://eli-xciv.github.io/content/images/size/w600/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 600w, https://eli-xciv.github.io/content/images/size/w1000/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 1000w, https://eli-xciv.github.io/content/images/2021/05/Screenshot_2021-05-20-archlinux-archinstall-1-.png 1140w" sizes="(min-width: 720px) 720px"></figure><p>Whoooooo, it's in master and should be completed. Lets check it out (literally w/ git).</p><pre><code class="language-bash">git clone https://github.com/archlinux/archinstall
-cd archlinux</code></pre><p>cool we got <code>master</code>, now lets install the requirements..... <code>python install</code></p><p>Now we can run this with python. <code>python -m archinstall guided</code></p><p>I followed the prompt and this time it didn't complain about <code>MBR</code>. So cool lets select the default partitioning scheme.</p><p>... </p><p>Great, all config items are set, now let it rip,</p><p>Error: <code>New partition never showed up after adding new partition on /dev/sda (timeout 10 seconds).</code></p><p>What!? - Okay maybe it's a fluke, lets run it again.</p><p>Same error....</p><p>Okay.... well lets look at <code>/dev/sda</code>. There's a partition there but that's from the OS I'm trying to write over.... well lets remove it since it'll be overwritten anyway.. and verify it's removed</p><pre><code class="language-bash">lsblk
-#/dev/sda
-#|-&gt; /dev/sda1
-
-parted /dev/sda rm 1
-
-lsblk
-#/dev/sda</code></pre><p>Now lets run <code>python -m archinstall guided</code> again...</p><p>Everything completes. Yay! Time to go report this to the <code>archinstall</code> folks.</p><p>And I did. <a href="https://github.com/archlinux/archinstall/issues/478">Here</a></p><p></p><p>So, if there is a will, there's a way! <br>Thanks for reading!</p>
+				<p>I'm a System Admin by trade and Software Developer by heart. I've primarily been focused on system side development and automation. Primarily Python, some Java and a lot of scripting. About a year or two ago I decided to foray into Web Development. Why? It was completely different for me, and why not? All the cool kids are doing it. So I tried React, I did <em>NOT</em> have any Javascript experience and the learning curve was wayyy to steep. I almost stopped doing web side projects because of React (No, I'm not blaming React). React has it's uses but it's not for me (At least right now). By hapenstance I stumbled upon Svelte. I felt at home. Everything just made sense for me using the framework. After working with Svelte and actually moving the needle on a side web project or two, at this point I have a much tighter grasp on the front end environment and the entire framework of frameworks. But this post isn't about React or Svelte..... this is much bigger than that. </p><p>One of my side projects was trying to conduct webcam capture and making a video stream all client side. Turns out prior to the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaStream_Recording_API">MediaRecorder API </a>this was done primarily server side? Before full client side support everything was done using WebRTC which from my research requires server side. Which would not fit my requirements. So anywho, I'm an adventurous person, lets go. I develop a sample app using the MediaRecorder API. I primarily use Chrome as a browser so I did all my development based upon Chrome. As soon as I get a prototype I figure it's time to make sure there's cross-browser compatibility. Edge (because it's now based on Chrome engine) worked well, no problems. Then using Safari on my iMac nothing works. So I launch the developer tools and there is <em>no</em> MediaRecorder API, it's undefined. Now mind you, I'm new to web development but I've known there's been some cross-compatability issues, which is why there are polyfills. But this is different. After some research I found <a href="https://webkit.org/blog/11353/mediarecorder-api/">this blog post from the WebKit website</a>. Cool hopefully it'll be supported soon? It says that it's in the iOS 14.3 Beta... Wait I didn't even think about mobile.</p><p>Now, I borrowed my parents android tablet to test my prototype... it worked. The MediaRecorder API was supported in Chrome on Android. Cool lets try Apple. I tried Safari though I knew it wasn't going to work. It didn't. Though I can turn it on in the Technology Preview Section.... but I wouldn't want my users to have to do that. Then I used Chrome on iOS..... naively I expected this to work. It also didn't. I was taken aback. Time to research again. Turns out Apple forces all browsers on their platform to use the same underlying engine, of which is also based upon WebKit. Great.</p><p>Now here's the kicker for me, I have a side project and prototype that I wanted to release and now I'm faced with either dropping support entirely for Apple Safari on desktop and all.. yes <em>all!</em> iOS devices, or at least waiting until the MediaRecorder API is supported and established. Which is who knows when. I can implement a server side capability to bypass this issue, but I don't want to do that and have to manage another thing. I did find an audio polyfill for this, but it didn't support video....</p><p>All in all, why does it take so long for Apple to support API's that seem like they should be standard? I already know a lot of the answers....</p><p>But, if anyone has any suggestions on being able to accomplish MediaRecorder capabilities without the API please let me know. Or else my side project will just gather dust thanks to Apple.</p><p>P.S. I'm an avid Apple user.... and an avid Linux User. I used both my iMac and a laptop running Arch Linux. This blog was written on my Arch machine...</p>
 			</section>
 
 			<section class="post-footer">
 
 				<div class="post-share">
 					<span class="post-info-label">Share</span>
-					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=Archinstall Issue&url=https://eli-xciv.github.io/archinstall-issue/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+					<a title="Twitter" aria-label="Twitter" class="twitter" href="https://twitter.com/share?text=Supporting Apple Devices on the Web...&url=https://eli-xciv.github.io/supporting-apple-devices-on-the-web/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
 						<i class="icon icon-twitter" aria-hidden="true"></i>
 					</a>
-					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://eli-xciv.github.io/archinstall-issue/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+					<a title="Facebook" aria-label="Facebook" class="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://eli-xciv.github.io/supporting-apple-devices-on-the-web/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
 						<i class="icon icon-facebook" aria-hidden="true"></i>
 					</a>
-					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://eli-xciv.github.io/archinstall-issue//&amp;title=Archinstall Issue" onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
+					<a title="LinkedIn" aria-label="LinkedIn" class="linkedin" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://eli-xciv.github.io/supporting-apple-devices-on-the-web//&amp;title=Supporting Apple Devices on the Web..." onclick="window.open(this.href, 'linkedin-share', 'width=930,height=720');return false;">
 						<i class="icon icon-linkedin" aria-hidden="true"></i>
 					</a>
-					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=Archinstall Issue&amp;body=https://eli-xciv.github.io/archinstall-issue/">
+					<a title="Email" aria-label="Email" class="email" href="mailto:?subject=Supporting Apple Devices on the Web...&amp;body=https://eli-xciv.github.io/supporting-apple-devices-on-the-web/">
 						<i class="icon icon-mail" aria-hidden="true"></i>
 					</a>
 				</div>
 
-				<aside class="post-tags">
-					<span class="post-info-label">Topic</span>
-					<a href="/tag/tech/">tech</a> <a href="/tag/arch/">arch</a>
-				</aside>
 
 			</section>
 
@@ -155,15 +133,15 @@ lsblk
 
 			<aside class="post-nav">
 
-					<a class="post-nav-next" href="/from-ghost-to-static-site/">
+
+					<a class="post-nav-prev" href="/from-ghost-to-static-site/">
 						<section class="post-nav-teaser">
-							<i class="icon icon-arrow-left" aria-label="Next post"></i>
+							<i class="icon icon-arrow-right" aria-label="Previous post"></i>
 							<h2 class="post-nav-title">From Ghost to Static Site</h2>
 							<p class="post-nav-excerpt">This is the story of creating this site... I've always liked the&hellip;</p>
 							<p class="post-nav-meta"><time datetime="20-05-2021">20 May 2021</time></p>
 						</section>
 					</a>
-
 				<div class="clear"></div>
 			</aside>
 
